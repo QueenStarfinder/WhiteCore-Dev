@@ -1392,7 +1392,7 @@
       </Files>
     </Project>
 
-    <Project frameworkVersion="v4_5" name="WhiteCore.ScriptEngine.DotNetEngine" path="WhiteCore/ScriptEngine/DotNetEngine" type="Library">
+    <Project frameworkVersion="v4_5" name="WhiteCore.ScriptEngine.Gaius" path="WhiteCore/ScriptEngine/Gaius" type="Library">
       <Configuration name="Debug" platform="x86">
         <Options>
           <OutputPath>../../../WhiteCoreSim/bin/</OutputPath>
@@ -1492,7 +1492,7 @@
 
       <Reference name="WhiteCore.DataManager"/>
       <Reference name="WhiteCore.Framework"/>
-      <Reference name="WhiteCore.ScriptEngine.DotNetEngine"/>
+      <Reference name="WhiteCore.ScriptEngine.Gaius"/>
       
       <Reference name="Nini" path="../../WhiteCoreSim/bin/"/>
       <Reference name="OpenMetaverse" path="../../WhiteCoreSim/bin/"/>

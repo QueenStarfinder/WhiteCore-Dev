@@ -39,7 +39,7 @@ using WhiteCore.Framework.SceneInfo;
 using WhiteCore.Framework.SceneInfo.Entities;
 using WhiteCore.Framework.Services.ClassHelpers.Inventory;
 using WhiteCore.Framework.Utilities;
-using WhiteCore.ScriptEngine.DotNetEngine.Runtime;
+using WhiteCore.ScriptEngine.Gaius.Runtime;
 
 
 namespace WhiteCore.BotManager
