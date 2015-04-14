@@ -173,7 +173,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
         public string ScriptEngineName
         {
-            get { return "DotNetEngine"; }
+            get { return "Gaius"; }
         }
 
         public IScriptModule ScriptModule
@@ -232,30 +232,30 @@ namespace WhiteCore.ScriptEngine.Gaius
             {
                 if (MainConsole.Instance != null)
                 {
-                    MainConsole.Instance.Commands.AddCommand("WDNE restart", 
-                	                                         "WDNE restart",
+                    MainConsole.Instance.Commands.AddCommand("Gaius restart",
+                                                             "Gaius restart",
                                                              "Restarts all scripts and clears all script caches",
-                                                             WhiteCoreDotNetRestart, false, false);
-                    
-                	MainConsole.Instance.Commands.AddCommand("WDNE stop",
-                	                                         "WDNE stop", 
+                                                             GaiusRestart, false, false);
+
+                    MainConsole.Instance.Commands.AddCommand("Gaius stop",
+                                                             "Gaius stop", 
                 	                                         "Stops all scripts",
-                                                             WhiteCoreDotNetStop, false, false);
-                    
-                	MainConsole.Instance.Commands.AddCommand("WDNE stats",
-                	                                         "WDNE stats",
-                                                             "Tells stats about the script engine", 
-                                                             WhiteCoreDotNetStats, false, false);
-                    
-                	MainConsole.Instance.Commands.AddCommand("WDNE disable",
-                	                                         "WDNE disable",
+                                                             GaiusStop, false, false);
+
+                    MainConsole.Instance.Commands.AddCommand("Gaius stats",
+                                                             "Gaius stats",
+                                                             "Tells stats about the script engine",
+                                                             GaiusStats, false, false);
+
+                    MainConsole.Instance.Commands.AddCommand("Gaius disable",
+                                                             "Gaius disable",
                                                              "Disables the script engine temperarily",
-                                                             WhiteCoreDotNetDisable, false, false);
-                    
-                	MainConsole.Instance.Commands.AddCommand("WDNE enable",
-                	                                         "WDNE enable", 
+                                                             GaiusDisable, false, false);
+
+                    MainConsole.Instance.Commands.AddCommand("Gaius enable",
+                                                             "Gaius enable", 
                 	                                         "Reenables the script engine",
-                                                             WhiteCoreDotNetEnable, false, false);
+                                                             GaiusEnable, false, false);
                 }
 
                 // Create all objects we'll be using
@@ -414,7 +414,7 @@ namespace WhiteCore.ScriptEngine.Gaius
             }
         }
 
-        protected void WhiteCoreDotNetRestart(IScene scene, string[] cmdparams)
+        protected void GaiusRestart(IScene scene, string[] cmdparams)
         {
             string go =
                 MainConsole.Instance.Prompt(
@@ -441,32 +441,32 @@ namespace WhiteCore.ScriptEngine.Gaius
                 MaintenanceThread.StartScripts(
                     scripts.Select(ID => new LUStruct {Action = LUType.Load, ID = ID}).ToArray());
 
-                MainConsole.Instance.Warn("[WDNE]: All scripts have been restarted.");
+                MainConsole.Instance.Warn("[Gaius]: All scripts have been restarted.");
             }
             else
             {
-                MainConsole.Instance.Info("[WDNE]: Not restarting all scripts");
+                MainConsole.Instance.Info("[Gaius]: Not restarting all scripts");
             }
         }
 
-        protected void WhiteCoreDotNetStop(IScene scene, string[] cmdparams)
+        protected void GaiusStop(IScene scene, string[] cmdparams)
         {
             string go = MainConsole.Instance.Prompt("Are you sure you want to stop all scripts?", "no");
             if (go.Contains("yes") || go.Contains("Yes"))
             {
                 StopAllScripts();
                 MaintenanceThread.Stop();
-                MainConsole.Instance.Warn("[WDNE]: All scripts have been stopped.");
+                MainConsole.Instance.Warn("[Gaius]: All scripts have been stopped.");
             }
             else
             {
-                MainConsole.Instance.Info("[WDNE]: Not restarting all scripts");
+                MainConsole.Instance.Info("[Gaius]: Not restarting all scripts");
             }
         }
 
-        protected void WhiteCoreDotNetStats(IScene scene, string[] cmdparams)
+        protected void GaiusStats(IScene scene, string[] cmdparams)
         {
-            MainConsole.Instance.Info ("WhiteCore DotNet Script Engine Stats:");
+            MainConsole.Instance.Info("Gaius Script Engine Stats:");
             MainConsole.Instance.CleanInfo ("    Region: " + scene.RegionInfo.RegionName);
             MainConsole.Instance.CleanInfo ("    Number of scripts compiled: " + Compiler.ScriptCompileCounter);
             MainConsole.Instance.CleanInfo ("    Max allowed threat level: " + ScriptProtection.GetThreatLevel ());
@@ -484,17 +484,17 @@ namespace WhiteCore.ScriptEngine.Gaius
             //MaintenanceThread.Stats();
         }
 
-        protected void WhiteCoreDotNetDisable(IScene scene, string[] cmdparams)
+        protected void GaiusDisable(IScene scene, string[] cmdparams)
         {
             ConsoleDisabled = true;
-            MainConsole.Instance.Warn("[WDNE]: WDNE has been disabled.");
+            MainConsole.Instance.Warn("[Gaius]: Gaius has been disabled.");
         }
 
-        protected void WhiteCoreDotNetEnable(IScene scene, string[] cmdparams)
+        protected void GaiusEnable(IScene scene, string[] cmdparams)
         {
             ConsoleDisabled = false;
             MaintenanceThread.Started = true;
-            MainConsole.Instance.Warn("[WDNE]: WDNE has been enabled.");
+            MainConsole.Instance.Warn("[Gaius]: Gaius has been enabled.");
         }
 
         #endregion

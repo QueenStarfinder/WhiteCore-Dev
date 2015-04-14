@@ -544,7 +544,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
             if (InventoryItem == null)
             {
-                MainConsole.Instance.Warn("[WDNE]: Could not find inventory item for script " + ItemID + ", part" +
+                MainConsole.Instance.Warn("[" + m_ScriptEngine.ScriptEngineName + "]: Could not find inventory item for script " + ItemID + ", part" +
                                           Part.Name + "@" +
                                           Part.AbsolutePosition);
                 return false;
@@ -573,7 +573,7 @@ namespace WhiteCore.ScriptEngine.Gaius
                 if (null == asset)
                 {
                     MainConsole.Instance.ErrorFormat(
-                        "[ScriptData]: " +
+                        "[" + m_ScriptEngine.ScriptEngineName + "]: " +
                         "Couldn't start script {0}, {1} at {2} in {3} since asset ID {4} could not be found",
                         InventoryItem.Name, InventoryItem.ItemID, Part.AbsolutePosition,
                         Part.ParentEntity.Scene.RegionInfo.RegionName, InventoryItem.AssetID);
@@ -585,7 +585,7 @@ namespace WhiteCore.ScriptEngine.Gaius
             if (string.IsNullOrEmpty(Source))
             {
                 MainConsole.Instance.ErrorFormat(
-                    "[ScriptData]: " +
+                    "[" + m_ScriptEngine.ScriptEngineName + "]: " +
                     "Couldn't start script {0}, {1} at {2} in {3} since asset ID {4} could not be found",
                     InventoryItem.Name, InventoryItem.ItemID, Part.AbsolutePosition,
                     Part.ParentEntity.Scene.RegionInfo.RegionName, InventoryItem.AssetID);
