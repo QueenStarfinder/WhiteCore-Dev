@@ -582,6 +582,7 @@ namespace WhiteCore.ScriptEngine.Gaius.Runtime
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
         }
 
         private Type m_typeCache; //This shouldn't normally be used
