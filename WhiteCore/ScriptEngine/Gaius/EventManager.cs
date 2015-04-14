@@ -70,8 +70,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
         public void HookUpRegionEvents(IScene Scene)
         {
-            //MainConsole.Instance.Info("[" + myScriptEngine.ScriptEngineName +
-            //           "]: Hooking up to server events");
+            MainConsole.Instance.Info("[" + m_scriptEngine.ScriptEngineName + "]: Hooking up to server events");
 
             Scene.EventManager.OnObjectGrab +=
                 touch_start;

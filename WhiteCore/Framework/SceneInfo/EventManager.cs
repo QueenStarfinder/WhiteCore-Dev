@@ -331,6 +331,18 @@ namespace WhiteCore.Framework.SceneInfo
 
         public event CachedUserInfo OnCachedUserInfo;
 
+        // Script Engine parts
+
+        public event StartScript OnStartScript;
+
+        public event ScriptResetDelegate OnScriptReset;
+
+        public event StopScript OnStopScript;
+
+        public event GetScriptRunning OnGetScriptRunning;
+
+        public event Action OnShutdown;
+
         public class LandBuyArgs : EventArgs
         {
             public UUID agentId = UUID.Zero;
@@ -1794,7 +1806,5 @@ namespace WhiteCore.Framework.SceneInfo
                 }
             }
         }
-
-
     }
 }

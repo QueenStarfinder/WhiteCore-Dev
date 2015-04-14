@@ -227,6 +227,8 @@ namespace WhiteCore.ScriptEngine.Gaius
             if (!m_enabled)
                 return;
 
+            m_Scene = scene;
+
             //Register the console commands
             if (FirstStartup)
             {
@@ -265,10 +267,6 @@ namespace WhiteCore.ScriptEngine.Gaius
                     ScriptProtection.Initialize(Config);
                 }
 
-                EventManager = new EventManager(this);
-
-                Compiler = new Compiler(this);
-
                 AppDomainManager = new AppDomainManager(this);
 
                 ScriptErrorReporter = new ScriptErrorReporter(Config);
@@ -286,7 +284,9 @@ namespace WhiteCore.ScriptEngine.Gaius
             if (!m_enabled)
                 return;
 
-            m_Scene = scene;
+            EventManager = new EventManager(this);
+
+            Compiler = new Compiler(this);
 
             //Must come AFTER the script plugins setup! Otherwise you'll get weird errors from the plugins
             if (MaintenanceThread == null)
@@ -314,12 +314,14 @@ namespace WhiteCore.ScriptEngine.Gaius
             StateSave.AddScene(scene);
 
             scene.EventManager.OnStartupComplete += EventManager_OnStartupComplete;
-            EventManager.HookUpRegionEvents(scene);
+            scene.EventManager.OnRemoveScript += OnRemoveScript;
+            scene.EventManager.OnScriptReset += OnScriptReset;
+            scene.EventManager.OnStartScript += OnStartScript;
+            scene.EventManager.OnStopScript += OnStopScript;
+            scene.EventManager.OnGetScriptRunning += OnGetScriptRunning;
+            scene.EventManager.OnShutdown += OnShutdown;
 
-            //Hook up to client events
-            scene.EventManager.OnNewClient += EventManager_OnNewClient;
-            scene.EventManager.OnClosingClient += EventManager_OnClosingClient;
-            scene.EventManager.OnRemoveScript += StopScript;
+            EventManager.HookUpRegionEvents(scene);
         }
 
         public void RemoveRegion(IScene scene)
@@ -358,24 +360,6 @@ namespace WhiteCore.ScriptEngine.Gaius
         {
             //All done!
             MaintenanceThread.Started = true;
-        }
-
-        #endregion
-
-        #region Client Events
-
-        void EventManager_OnNewClient(IClientAPI client)
-        {
-            client.OnScriptReset += ProcessScriptReset;
-            client.OnGetScriptRunning += OnGetScriptRunning;
-            client.OnSetScriptRunning += SetScriptRunning;
-        }
-
-        void EventManager_OnClosingClient(IClientAPI client)
-        {
-            client.OnScriptReset -= ProcessScriptReset;
-            client.OnGetScriptRunning -= OnGetScriptRunning;
-            client.OnSetScriptRunning -= SetScriptRunning;
         }
 
         #endregion
@@ -820,6 +804,17 @@ namespace WhiteCore.ScriptEngine.Gaius
             if (ID != null)
                 ID.Suspended = true;
         }
+        
+        public void OnRemoveScript(uint localID, UUID itemID)
+        {
+            ObjectRemoved handlerObjectRemoved = OnObjectRemoved;
+            if (handlerObjectRemoved != null)
+            { }
+
+            ScriptRemoved handlerScriptRemoved = OnScriptRemoved;
+            if (handlerScriptRemoved != null)
+                handlerScriptRemoved(itemID);
+        }
 
         /// <summary>
         ///     Not from the client, only from other parts of the simulator
@@ -853,6 +848,11 @@ namespace WhiteCore.ScriptEngine.Gaius
             ID.Running = false;
             ID.Part.SetScriptEvents(itemID, 0);
             ID.Part.ScheduleUpdate(PrimUpdateFlags.FindBest);
+        }
+
+        public void OnScriptReset(uint localID, UUID itemID)
+        {
+            ResetScript(itemID);
         }
 
         public void OnGetScriptRunning(IClientAPI controllingClient,
@@ -1091,7 +1091,6 @@ namespace WhiteCore.ScriptEngine.Gaius
                 return;
 
             LUStruct ls = new LUStruct {ID = data, Action = LUType.Unload};
-
 
             MaintenanceThread.AddScriptChange(new[] {ls}, LoadPriority.Stop);
 
