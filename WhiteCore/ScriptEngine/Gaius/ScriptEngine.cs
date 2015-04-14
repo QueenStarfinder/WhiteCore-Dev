@@ -48,7 +48,7 @@ using WhiteCore.ScriptEngine.Gaius.Runtime;
 
 namespace WhiteCore.ScriptEngine.Gaius
 {
-    public class ScriptEngine : INonSharedRegionModule, IScriptModulePlugin
+    public class GaiusEngine : INonSharedRegionModule, IScriptModulePlugin
     {
         #region Declares
 

@@ -51,7 +51,7 @@ namespace WhiteCore.ScriptEngine.Gaius
         ///     Start the plugin
         /// </summary>
         /// <param name="engine"></param>
-        void Initialize(ScriptEngine engine);
+        void Initialize(GaiusEngine engine);
 
         /// <summary>
         ///     Add the given region to the plugin that it will be serving

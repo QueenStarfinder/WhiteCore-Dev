@@ -61,9 +61,9 @@ namespace WhiteCore.ScriptEngine.Gaius
         private readonly Dictionary<uint, Dictionary<UUID, DetectParams>> CoalescedTouchEvents =
             new Dictionary<uint, Dictionary<UUID, DetectParams>>();
 
-        private readonly ScriptEngine m_scriptEngine;
+        private readonly GaiusEngine m_scriptEngine;
 
-        public EventManager(ScriptEngine _ScriptEngine)
+        public EventManager(GaiusEngine _ScriptEngine)
         {
             m_scriptEngine = _ScriptEngine;
         }
@@ -118,11 +118,11 @@ namespace WhiteCore.ScriptEngine.Gaius
 
         public void changed(ISceneChildEntity part, uint change)
         {
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.RootChild.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.RootChild.UUID);
                 if (datas == null || datas.Length == 0)
                     return;
             }
@@ -166,7 +166,7 @@ namespace WhiteCore.ScriptEngine.Gaius
             det[remoteClient.AgentId] = detparam;
             CoalescedTouchEvents[part.LocalId] = det;
 
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
                 return;
@@ -207,7 +207,7 @@ namespace WhiteCore.ScriptEngine.Gaius
             det[remoteClient.AgentId] = detparam;
             CoalescedTouchEvents[part.LocalId] = det;
 
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
                 return;
@@ -242,7 +242,7 @@ namespace WhiteCore.ScriptEngine.Gaius
             det[remoteClient.AgentId] = detparam;
             CoalescedTouchEvents[part.LocalId] = det;
 
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
                 return;
@@ -267,11 +267,11 @@ namespace WhiteCore.ScriptEngine.Gaius
             ISceneChildEntity part = m_scriptEngine.findPrim(primID);
             if (part == null) return ret;
 
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
                 if (datas == null || datas.Length == 0) return ret;
             }
             string functionName = "money";
@@ -304,7 +304,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
             if (det.Count > 0)
             {
-                ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+                ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
                 if (datas == null || datas.Length == 0)
                 {
@@ -336,7 +336,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
             if (det.Count > 0)
             {
-                ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+                ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
                 if (datas == null || datas.Length == 0)
                 {
@@ -368,7 +368,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
             if (det.Count > 0)
             {
-                ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+                ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
                 if (datas == null || datas.Length == 0)
                 {
@@ -407,7 +407,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
             if (det.Count != 0)
             {
-                ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+                ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
                 if (datas == null || datas.Length == 0)
                 {
@@ -446,7 +446,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
             if (det.Count != 0)
             {
-                ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+                ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
                 if (datas == null || datas.Length == 0)
                 {
@@ -485,7 +485,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
             if (det.Count != 0)
             {
-                ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+                ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
                 if (datas == null || datas.Length == 0)
                 {
@@ -507,7 +507,7 @@ namespace WhiteCore.ScriptEngine.Gaius
         {
             if (part == null)
                 return;
-            ScriptData ID = ScriptEngine.ScriptProtection.GetScript(part.UUID, itemID);
+            ScriptData ID = GaiusEngine.ScriptProtection.GetScript(part.UUID, itemID);
 
             if (ID == null)
                 return;
@@ -529,11 +529,11 @@ namespace WhiteCore.ScriptEngine.Gaius
             ISceneChildEntity part = m_scriptEngine.findPrim(localID);
             if (part == null)
                 return;
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
                 if (datas == null || datas.Length == 0)
                     return;
             }
@@ -560,11 +560,11 @@ namespace WhiteCore.ScriptEngine.Gaius
             ISceneChildEntity part = m_scriptEngine.findPrim(localID);
             if (part == null)
                 return;
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
                 if (datas == null || datas.Length == 0)
                     return;
             }
@@ -588,11 +588,11 @@ namespace WhiteCore.ScriptEngine.Gaius
             ISceneChildEntity part = m_scriptEngine.findPrim(localID);
             if (part == null)
                 return;
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
                 if (datas == null || datas.Length == 0)
                     return;
             }
@@ -612,11 +612,11 @@ namespace WhiteCore.ScriptEngine.Gaius
             ISceneChildEntity part = m_scriptEngine.findPrim(localID);
             if (part == null)
                 return;
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
                 if (datas == null || datas.Length == 0)
                     return;
             }
@@ -640,11 +640,11 @@ namespace WhiteCore.ScriptEngine.Gaius
             ISceneChildEntity part = m_scriptEngine.findPrim(localID);
             if (part == null)
                 return;
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
                 if (datas == null || datas.Length == 0)
                     return;
             }
@@ -663,11 +663,11 @@ namespace WhiteCore.ScriptEngine.Gaius
             ISceneChildEntity part = m_scriptEngine.findPrim(localID);
             if (part == null)
                 return;
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.UUID);
                 if (datas == null || datas.Length == 0)
                     return;
             }
@@ -686,11 +686,11 @@ namespace WhiteCore.ScriptEngine.Gaius
 
         public void moving_start(ISceneChildEntity part)
         {
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.RootChild.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.RootChild.UUID);
                 if (datas == null || datas.Length == 0)
                     return;
             }
@@ -706,11 +706,11 @@ namespace WhiteCore.ScriptEngine.Gaius
 
         public void moving_end(ISceneChildEntity part)
         {
-            ScriptData[] datas = ScriptEngine.ScriptProtection.GetScripts(part.UUID);
+            ScriptData[] datas = GaiusEngine.ScriptProtection.GetScripts(part.UUID);
 
             if (datas == null || datas.Length == 0)
             {
-                datas = ScriptEngine.ScriptProtection.GetScripts(part.ParentEntity.RootChild.UUID);
+                datas = GaiusEngine.ScriptProtection.GetScripts(part.ParentEntity.RootChild.UUID);
                 if (datas == null || datas.Length == 0)
                     return;
             }

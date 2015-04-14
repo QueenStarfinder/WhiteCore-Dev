@@ -37,7 +37,7 @@ namespace WhiteCore.ScriptEngine.Gaius.Plugins
     public class XmlRequestPlugin : IScriptPlugin
     {
         private readonly List<IXMLRPC> m_modules = new List<IXMLRPC>();
-        public ScriptEngine m_ScriptEngine;
+        public GaiusEngine m_ScriptEngine;
 
         #region IScriptPlugin Members
 
@@ -46,7 +46,7 @@ namespace WhiteCore.ScriptEngine.Gaius.Plugins
             get { return false; }
         }
 
-        public void Initialize(ScriptEngine ScriptEngine)
+        public void Initialize(GaiusEngine ScriptEngine)
         {
             m_ScriptEngine = ScriptEngine;
         }

@@ -37,10 +37,10 @@ namespace WhiteCore.ScriptEngine.Gaius
 {
     public class ScriptStateSave
     {
-        private ScriptEngine m_module;
+        private GaiusEngine m_module;
         private object StateSaveLock = new object();
 
-        public void Initialize(ScriptEngine module)
+        public void Initialize(GaiusEngine module)
         {
             m_module = module;
         }

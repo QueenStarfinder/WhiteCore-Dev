@@ -57,7 +57,7 @@ namespace WhiteCore.ScriptEngine.Gaius
         private readonly PriorityQueue<QueueItemStruct, Int64> SleepingScriptEvents =
             new PriorityQueue<QueueItemStruct, Int64>(10, DateTimeComparer);
 
-        private readonly ScriptEngine m_ScriptEngine;
+        private readonly GaiusEngine m_ScriptEngine;
         public Int64 CmdHandlerQueueIsRunning;
         private float EventPerformance = 0.1f;
         public bool EventProcessorIsRunning;
@@ -98,7 +98,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
         #region Constructor
 
-        public MaintenanceThread(ScriptEngine Engine)
+        public MaintenanceThread(GaiusEngine Engine)
         {
             m_ScriptEngine = Engine;
             EventManager = Engine.EventManager;
@@ -413,7 +413,7 @@ namespace WhiteCore.ScriptEngine.Gaius
         {
             if (itemID != UUID.Zero)
             {
-                ScriptData script = ScriptEngine.ScriptProtection.GetScript(itemID);
+                ScriptData script = GaiusEngine.ScriptProtection.GetScript(itemID);
                 if (script != null && script.Script != null)
                     script.Script.NeedsStateSaved = true;
             }

@@ -48,7 +48,7 @@ namespace WhiteCore.ScriptEngine.Gaius
             new List<AppDomainStructure>();
 
         private readonly object m_appDomainLock = new object();
-        private readonly ScriptEngine m_scriptEngine;
+        private readonly GaiusEngine m_scriptEngine;
         private int AppDomainNameCount;
         private AppDomainStructure currentAD;
 
@@ -57,7 +57,7 @@ namespace WhiteCore.ScriptEngine.Gaius
         private string m_PermissionLevel = "Internet";
         private int maxScriptsPerAppDomain = 1;
 
-        public AppDomainManager(ScriptEngine scriptEngine)
+        public AppDomainManager(GaiusEngine scriptEngine)
         {
             m_scriptEngine = scriptEngine;
             ReadConfig();

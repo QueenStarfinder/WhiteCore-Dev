@@ -46,7 +46,7 @@ namespace WhiteCore.ScriptEngine.Gaius.CompilerTools
         private readonly List<string> m_errors = new List<string>();
 
         private readonly List<string> m_referencedFiles = new List<string>();
-        private readonly ScriptEngine m_scriptEngine;
+        private readonly GaiusEngine m_scriptEngine;
         private readonly List<string> m_warnings = new List<string>();
 
         public Dictionary<string, IScriptConverter> AllowedCompilers =
@@ -75,7 +75,7 @@ namespace WhiteCore.ScriptEngine.Gaius.CompilerTools
             get { return scriptCompileCounter; }
         }
 
-        public ScriptEngine ScriptEngine
+        public GaiusEngine ScriptEngine
         {
             get { return m_scriptEngine; }
         }
@@ -84,7 +84,7 @@ namespace WhiteCore.ScriptEngine.Gaius.CompilerTools
 
         #region Setup
 
-        public Compiler(ScriptEngine scriptEngine)
+        public Compiler(GaiusEngine scriptEngine)
         {
             m_scriptEngine = scriptEngine;
             ReadConfig();

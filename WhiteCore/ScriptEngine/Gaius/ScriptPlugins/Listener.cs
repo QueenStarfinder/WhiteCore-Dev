@@ -37,7 +37,7 @@ namespace WhiteCore.ScriptEngine.Gaius.Plugins
     public class ListenerPlugin : IScriptPlugin
     {
         private readonly List<IWorldComm> m_modules = new List<IWorldComm>();
-        public ScriptEngine m_ScriptEngine;
+        public GaiusEngine m_ScriptEngine;
 
         #region IScriptPlugin Members
 
@@ -46,7 +46,7 @@ namespace WhiteCore.ScriptEngine.Gaius.Plugins
             get { return true; }
         }
 
-        public void Initialize(ScriptEngine engine)
+        public void Initialize(GaiusEngine engine)
         {
             m_ScriptEngine = engine;
         }

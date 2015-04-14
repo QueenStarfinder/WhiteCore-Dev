@@ -48,7 +48,7 @@ namespace WhiteCore.ScriptEngine.Gaius.Plugins
         private readonly Object SenseLock = new Object();
         private readonly object SenseRepeatListLock = new object();
         private List<SenseRepeatClass> SenseRepeaters = new List<SenseRepeatClass>();
-        public ScriptEngine m_ScriptEngine;
+        public GaiusEngine m_ScriptEngine;
 
         private double maximumRange = 96.0;
         private int maximumToReturn = 16;
@@ -62,7 +62,7 @@ namespace WhiteCore.ScriptEngine.Gaius.Plugins
             get { return true; }
         }
 
-        public void Initialize(ScriptEngine engine)
+        public void Initialize(GaiusEngine engine)
         {
             m_ScriptEngine = engine;
             maximumRange = engine.Config.GetDouble("SensorMaxRange", 512.0d);

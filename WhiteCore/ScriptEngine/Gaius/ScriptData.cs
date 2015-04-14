@@ -51,7 +51,7 @@ namespace WhiteCore.ScriptEngine.Gaius
     {
         #region Constructor
 
-        public ScriptData(ScriptEngine engine)
+        public ScriptData(GaiusEngine engine)
         {
             m_ScriptEngine = engine;
 
@@ -112,7 +112,7 @@ namespace WhiteCore.ScriptEngine.Gaius
         "moving_start", "moving_end", "not_at_target", "not_at_rot_target" };
             
         //This is the UUID of the actual script.
-        readonly ScriptEngine m_ScriptEngine;
+        readonly GaiusEngine m_ScriptEngine;
         public Dictionary<string, IScriptApi> Apis;
         public AppDomain AppDomain;
         public string AssemblyName;
@@ -217,7 +217,7 @@ namespace WhiteCore.ScriptEngine.Gaius
             }
 
             // Remove from internal structure
-            ScriptEngine.ScriptProtection.RemoveScript(this);
+            GaiusEngine.ScriptProtection.RemoveScript(this);
             //            if (!Silent) //Don't remove on a recompile because we'll make it under a different assembly
             //                ScriptEngine.ScriptProtection.RemovePreviouslyCompiled(Source);
 
@@ -382,7 +382,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
                 //Tell the SOP about the change.
                 Part.SetScriptEvents(ItemID, Script.GetStateEventFlags(state));
-                ScriptEngine.ScriptProtection.AddNewScript(this);
+                GaiusEngine.ScriptProtection.AddNewScript(this);
 
                 m_ScriptEngine.MaintenanceThread.AddEventSchQueue(this, "state_entry",
                                                                   new DetectParams[0], EventPriority.FirstStart,
@@ -412,7 +412,7 @@ namespace WhiteCore.ScriptEngine.Gaius
             foreach (IScriptApi api in m_ScriptEngine.GetAPIs())
             {
                 Apis[api.Name] = api;
-                Apis[api.Name].Initialize(m_ScriptEngine, Part, Part.LocalId, ItemID, ScriptEngine.ScriptProtection);
+                Apis[api.Name].Initialize(m_ScriptEngine, Part, Part.LocalId, ItemID, GaiusEngine.ScriptProtection);
                 Script.InitApi(api);
             }
             //We must always do this, as reset doesn't care whether there is a state save or not, we must have the defaults
@@ -577,7 +577,7 @@ namespace WhiteCore.ScriptEngine.Gaius
                         "Couldn't start script {0}, {1} at {2} in {3} since asset ID {4} could not be found",
                         InventoryItem.Name, InventoryItem.ItemID, Part.AbsolutePosition,
                         Part.ParentEntity.Scene.RegionInfo.RegionName, InventoryItem.AssetID);
-                    ScriptEngine.ScriptProtection.RemoveScript(this);
+                    GaiusEngine.ScriptProtection.RemoveScript(this);
                     return false;
                 }
                 Source = Utils.BytesToString(asset);
@@ -589,13 +589,13 @@ namespace WhiteCore.ScriptEngine.Gaius
                     "Couldn't start script {0}, {1} at {2} in {3} since asset ID {4} could not be found",
                     InventoryItem.Name, InventoryItem.ItemID, Part.AbsolutePosition,
                     Part.ParentEntity.Scene.RegionInfo.RegionName, InventoryItem.AssetID);
-                ScriptEngine.ScriptProtection.RemoveScript(this);
+                GaiusEngine.ScriptProtection.RemoveScript(this);
                 return false;
             }
 
             #region HTML Reader
 
-            if (ScriptEngine.ScriptProtection.AllowHTMLLinking)
+            if (GaiusEngine.ScriptProtection.AllowHTMLLinking)
             {
                 //Read the URL and load it.
                 if (Source.Contains("#IncludeHTML "))
@@ -652,7 +652,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
                 //Try to find a previously compiled script in this instance
                 string PreviouslyCompiledAssemblyName =
-                    ScriptEngine.ScriptProtection.TryGetPreviouslyCompiledScript(Source);
+                    GaiusEngine.ScriptProtection.TryGetPreviouslyCompiledScript(Source);
                 if (PreviouslyCompiledAssemblyName != null)
                     //Already exists in this instance, so we do not need to check whether it exists
                     AssemblyName = PreviouslyCompiledAssemblyName;
@@ -677,7 +677,7 @@ namespace WhiteCore.ScriptEngine.Gaius
                             }
                             DisplayUserNotification(error, "compiling", reupload, true);
                             //It might have failed, but we still need to add it so that we can reuse this script data class later
-                            ScriptEngine.ScriptProtection.AddNewScript(this);
+                            GaiusEngine.ScriptProtection.AddNewScript(this);
                             m_ScriptEngine.StateSave.SaveStateTo(this, true);
                             return false;
                         }
@@ -699,7 +699,7 @@ namespace WhiteCore.ScriptEngine.Gaius
                                 }
                                 DisplayUserNotification(error, "compiling", reupload, false);
                                 //It might have failed, but we still need to add it so that we can reuse this script data class later
-                                ScriptEngine.ScriptProtection.AddNewScript(this);
+                                GaiusEngine.ScriptProtection.AddNewScript(this);
                                 return false;
                             }
                         }
@@ -713,7 +713,7 @@ namespace WhiteCore.ScriptEngine.Gaius
                         //LEAVE IT AS ToString() SO THAT WE GET THE STACK TRACE TOO
                         DisplayUserNotification(ex.ToString(), "(exception) compiling", reupload, true);
                         //It might have failed, but we still need to add it so that we can reuse this script data class later
-                        ScriptEngine.ScriptProtection.AddNewScript(this);
+                        GaiusEngine.ScriptProtection.AddNewScript(this);
                         return false;
                     }
                 }
@@ -730,21 +730,21 @@ namespace WhiteCore.ScriptEngine.Gaius
                 Script = m_ScriptEngine.AppDomainManager.LoadScript(AssemblyName, "Script.ScriptClass", out AppDomain);
                 m_ScriptEngine.Compiler.FinishCompile(this, Script);
                 //Add now so that we don't add it too early and give it the possibility to fail
-                ScriptEngine.ScriptProtection.AddPreviouslyCompiled(Source, this);
+                GaiusEngine.ScriptProtection.AddPreviouslyCompiled(Source, this);
             }
             catch (FileNotFoundException) // Not valid!!!
             {
                 MainConsole.Instance.Error("[" + m_ScriptEngine.ScriptEngineName +
                                            "]: File not found in app domain creation. Corrupt state save! " +
                                            AssemblyName);
-                ScriptEngine.ScriptProtection.RemovePreviouslyCompiled(Source);
+                GaiusEngine.ScriptProtection.RemovePreviouslyCompiled(Source);
                 return Start(startInfo); // Lets restart the script if this happens
             }
             catch (Exception ex)
             {
                 DisplayUserNotification(ex.ToString(), "app domain creation", reupload, true);
                 //It might have failed, but we still need to add it so that we can reuse this script data class later
-                ScriptEngine.ScriptProtection.AddNewScript(this);
+                GaiusEngine.ScriptProtection.AddNewScript(this);
                 return false;
             }
             Compiled = true; //We compiled successfully
@@ -808,7 +808,7 @@ namespace WhiteCore.ScriptEngine.Gaius
             Part.SetScriptEvents(ItemID, Script.GetStateEventFlags(State));
 
             // Add it to our script memstruct so it can be found by other scripts
-            ScriptEngine.ScriptProtection.AddNewScript(this);
+            GaiusEngine.ScriptProtection.AddNewScript(this);
 
             //All done, compiled successfully
             Loading = false;

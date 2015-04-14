@@ -39,7 +39,7 @@ namespace WhiteCore.ScriptEngine.Gaius.Plugins
         private readonly Dictionary<string, DataserverRequest> DataserverRequests =
             new Dictionary<string, DataserverRequest>();
 
-        public ScriptEngine m_ScriptEngine;
+        public GaiusEngine m_ScriptEngine;
 
         #region IScriptPlugin Members
 
@@ -48,7 +48,7 @@ namespace WhiteCore.ScriptEngine.Gaius.Plugins
             get { return true; }
         }
 
-        public void Initialize(ScriptEngine engine)
+        public void Initialize(GaiusEngine engine)
         {
             m_ScriptEngine = engine;
         }
