@@ -333,7 +333,13 @@ namespace WhiteCore.Framework.SceneInfo
 
         // Script Engine parts
 
+        public delegate void StartScript(uint localID, UUID itemID);
+
         public event StartScript OnStartScript;
+
+        public delegate void StopScript(uint localID, UUID itemID);
+
+        public delegate void ScriptResetDelegate(uint localID, UUID itemID);
 
         public event ScriptResetDelegate OnScriptReset;
 

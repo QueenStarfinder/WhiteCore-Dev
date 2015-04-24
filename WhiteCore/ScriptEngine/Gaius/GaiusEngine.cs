@@ -319,7 +319,6 @@ namespace WhiteCore.ScriptEngine.Gaius
             scene.EventManager.OnStartScript += OnStartScript;
             scene.EventManager.OnStopScript += OnStopScript;
             scene.EventManager.OnGetScriptRunning += OnGetScriptRunning;
-            scene.EventManager.OnShutdown += OnShutdown;
 
             EventManager.HookUpRegionEvents(scene);
         }
@@ -761,7 +760,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
         #region Reset
 
-        public void ResetScript(UUID primID, UUID itemID, bool EndEvent)
+        public void ResetScript(UUID primID)
         {
             ScriptData ID = ScriptProtection.GetScript(itemID);
             if (ID == null)
@@ -852,7 +851,7 @@ namespace WhiteCore.ScriptEngine.Gaius
 
         public void OnScriptReset(uint localID, UUID itemID)
         {
-            ResetScript(itemID);
+            ResetScript(localID);
         }
 
         public void OnGetScriptRunning(IClientAPI controllingClient,
